@@ -1,0 +1,45 @@
+{
+  "author": "Taufik Nurrohman",
+  "browser": "index.min.js",
+  "bugs": "https://github.com/taufik-nurrohman/text-editor.history/issues",
+  "description": "History extension for text editor.",
+  "devDependencies": {
+    "@taufik-nurrohman/factory": "^0.1.10",
+    "@taufik-nurrohman/to": "^0.0.16"
+  },
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "index.min.js",
+    "index.mjs"
+  ],
+  "funding": {
+    "url": "https://paypal.me/tatautaufik"
+  },
+  "homepage": "https://taufik-nurrohman.js.org/text-editor",
+  "keywords": [
+    "editor",
+    "history",
+    "range",
+    "redo",
+    "selection",
+    "text",
+    "undo"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "module": "index.mjs",
+  "name": "@taufik-nurrohman/text-editor.history",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taufik-nurrohman/text-editor.history.git"
+  },
+  "scripts": {
+    "pack": "pack --clean=false --from=.github/source --js-format=umd --js-name=TE.History --js-top='%(js.license)' --mjs=true --to=."
+  },
+  "type": "module",
+  "version": "2.0.0"
+}
