@@ -2,10 +2,12 @@ extends _index.pug
 
 block state
   - const title = 'History \xB7 Text Editor'
-  - const scripts = ['../../text-editor/index.min.js', 'index.min.js']
+  - const scripts = ['../text-editor/index.min.js', 'index.min.js']
 
 block script
   script
+    | Object.assign(TE.prototype, TE.History);
+    |
     | const editor = new TE(document.querySelector('textarea'));
     |
     | let dump = document.querySelector('#dump');
@@ -46,15 +48,15 @@ block content
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor');
-      | const History = require('@taufik-nurrohman/text-editor.history');
+      | const TE_History = require('@taufik-nurrohman/text-editor.history');
       |
-      | Object.assign(TE.prototype, History);
+      | Object.assign(TE.prototype, TE_History);
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import * as History from '@taufik-nurrohman/text-editor.history';
+      | import * as TE_History from '@taufik-nurrohman/text-editor.history';
       |
-      | Object.assign(TE.prototype, History);
+      | Object.assign(TE.prototype, TE_History);
     h2 Methods and Properties
     h3 editor.history()
     p Get history data.

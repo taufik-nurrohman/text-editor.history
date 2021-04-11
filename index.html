@@ -15,14 +15,14 @@
       <h2>Usage</h2>
       <h4>CommonJS</h4>
       <pre><code>const TE = require('@taufik-nurrohman/text-editor');
-const History = require('@taufik-nurrohman/text-editor.history');
+const TE_History = require('@taufik-nurrohman/text-editor.history');
 
-Object.assign(TE.prototype, History);</code></pre>
+Object.assign(TE.prototype, TE_History);</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TE from '@taufik-nurrohman/text-editor';
-import * as History from '@taufik-nurrohman/text-editor.history';
+import * as TE_History from '@taufik-nurrohman/text-editor.history';
 
-Object.assign(TE.prototype, History);</code></pre>
+Object.assign(TE.prototype, TE_History);</code></pre>
       <h2>Methods and Properties</h2>
       <h3>editor.history()</h3>
       <p>Get history data.</p>
@@ -35,9 +35,11 @@ Object.assign(TE.prototype, History);</code></pre>
       <h3>editor.redo()</h3>
       <p>Redo previous action.</p>
     </main>
-    <script src="../../text-editor/index.min.js"></script>
+    <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>
     <script>
+      Object.assign(TE.prototype, TE.History);
+
       const editor = new TE(document.querySelector('textarea'));
 
       let dump = document.querySelector('#dump');
