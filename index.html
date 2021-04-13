@@ -13,6 +13,12 @@
       <p><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button></p>
       <pre id="out"><code></code></pre>
       <h2>Usage</h2>
+      <h4>Browser</h4>
+      <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
+&lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
+&lt;script&gt;
+Object.assign(TE.prototype, TE.History);
+&lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
       <pre><code>const TE = require('@taufik-nurrohman/text-editor');
 const TE_History = require('@taufik-nurrohman/text-editor.history');

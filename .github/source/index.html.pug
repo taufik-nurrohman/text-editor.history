@@ -45,6 +45,13 @@ block content
       button(onclick='editor.redo();') Redo
     pre#out: code
     h2 Usage
+    h4 Browser
+    pre: code
+      | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
+      | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
+      | &lt;script&gt;
+      | Object.assign(TE.prototype, TE.History);
+      | &lt;/script&gt;
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor');
