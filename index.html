@@ -8,10 +8,10 @@
   </head>
   <body>
     <main>
-      <p><textarea placeholder="Type something&hellip;" spellcheck="false"></textarea></p>
+      <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false"></textarea></p>
       <p><button onclick="dump.innerHTML = 'Current: ' + editor._historyState + '\n---\nAll: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <p><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button></p>
-      <pre id="dump"><code></code></pre>
+      <pre id="out"><code></code></pre>
       <h2>Usage</h2>
       <h4>CommonJS</h4>
       <pre><code>const TE = require('@taufik-nurrohman/text-editor');
@@ -24,11 +24,11 @@ import * as TE_History from '@taufik-nurrohman/text-editor.history';
 
 Object.assign(TE.prototype, TE_History);</code></pre>
       <h2>Methods and Properties</h2>
-      <h3>editor.history()</h3>
+      <h3>editor.history(index)</h3>
       <p>Get history data.</p>
-      <h3>editor.record()</h3>
+      <h3>editor.record(index)</h3>
       <p>Store current value and selection to history.</p>
-      <h3>editor.loss()</h3>
+      <h3>editor.loss(index)</h3>
       <p>Remove previous history data.</p>
       <h3>editor.undo()</h3>
       <p>Undo previous action.</p>
@@ -40,9 +40,9 @@ Object.assign(TE.prototype, TE_History);</code></pre>
     <script>
       Object.assign(TE.prototype, TE.History);
 
-      const editor = new TE(document.querySelector('textarea'));
+      const editor = new TE(document.querySelector('#in'));
 
-      let dump = document.querySelector('#dump');
+      let dump = document.querySelector('#out');
 
       editor.record(); // Record the initial value
 

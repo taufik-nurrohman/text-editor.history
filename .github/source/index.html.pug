@@ -8,9 +8,9 @@ block script
   script
     | Object.assign(TE.prototype, TE.History);
     |
-    | const editor = new TE(document.querySelector('textarea'));
+    | const editor = new TE(document.querySelector('#in'));
     |
-    | let dump = document.querySelector('#dump');
+    | let dump = document.querySelector('#out');
     |
     | editor.record(); // Record the initial value
     |
@@ -20,7 +20,7 @@ block script
 
 block content
   main
-    p: textarea(placeholder!='Type something&hellip;' spellcheck='false')
+    p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false')
     p
       button(onclick='dump.innerHTML = \'Current: \' + editor._historyState + \'\\n---\\nAll: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
@@ -43,7 +43,7 @@ block content
       button(onclick='editor.undo();') Undo
       = ' '
       button(onclick='editor.redo();') Redo
-    pre#dump: code
+    pre#out: code
     h2 Usage
     h4 CommonJS
     pre: code
@@ -58,11 +58,11 @@ block content
       |
       | Object.assign(TE.prototype, TE_History);
     h2 Methods and Properties
-    h3 editor.history()
+    h3 editor.history(index)
     p Get history data.
-    h3 editor.record()
+    h3 editor.record(index)
     p Store current value and selection to history.
-    h3 editor.loss()
+    h3 editor.loss(index)
     p Remove previous history data.
     h3 editor.undo()
     p Undo previous action.

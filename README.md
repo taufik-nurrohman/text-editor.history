@@ -8,6 +8,6 @@ Text Editor History
 Release Notes
 -------------
 
-### main
+### 2.0.0
 
- - [ ] Moved extensions from the main repository.
+ - Moved extensions from the main repository.
