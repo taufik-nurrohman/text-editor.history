@@ -9,7 +9,7 @@
   <body>
     <main>
       <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false"></textarea></p>
-      <p><button onclick="dump.innerHTML = 'Current: ' + editor._historyState + '\n---\nAll: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
+      <p><button onclick="dump.innerHTML = 'Index: ' + editor._historyState + '\n---\nHistory: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <p><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button></p>
       <pre id="out"><code></code></pre>
       <h2>Usage</h2>

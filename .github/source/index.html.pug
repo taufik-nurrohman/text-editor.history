@@ -22,7 +22,7 @@ block content
   main
     p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false')
     p
-      button(onclick='dump.innerHTML = \'Current: \' + editor._historyState + \'\\n---\\nAll: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
+      button(onclick='dump.innerHTML = \'Index: \' + editor._historyState + \'\\n---\\nHistory: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
       button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
       = ' '
