@@ -2,6 +2,9 @@
   "author": "Taufik Nurrohman",
   "browser": "index.min.js",
   "bugs": "https://github.com/taufik-nurrohman/text-editor.history/issues",
+  "dependencies": {
+    "@taufik-nurrohman/text-editor": "^3.2.5"
+  },
   "description": "History extension for text editor.",
   "devDependencies": {
     "@taufik-nurrohman/factory": "^0.1.10",
