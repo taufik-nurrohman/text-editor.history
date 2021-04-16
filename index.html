@@ -4,9 +4,67 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="History extension for text editor." name="description">
-    <title>History · Text Editor</title>
+    <title>Text Editor History 2.0.0</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      :root {
+        background: #fff;
+        color: #000;
+        border-top: 4px solid;
+        font: normal normal 16px/1.25 serif;
+      }
+      a {
+        color: #009;
+        text-decoration: none;
+      }
+      a,
+      code {
+        word-wrap: break-word;
+      }
+      code {
+        font-family: monospace;
+        font-size: 80%;
+      }
+      footer,
+      header,
+      main,
+      nav {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      hr {
+        border: 0;
+        color: inherit;
+        border-top: 1px dashed;
+        height: 0;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      pre code {
+        display: block;
+        background: #eee;
+        padding: 1em;
+      }
+      table {
+        width: 100%;
+      }
+      td,
+      th {
+        text-align: left;
+        vertical-align: top;
+      }
+    </style>
   </head>
   <body>
+    <header>
+      <h1>Text Editor History 2.0.0</h1>
+      <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
+      <hr>
+    </header>
     <main>
       <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false"></textarea></p>
       <p><button onclick="dump.innerHTML = 'Index: ' + editor._historyState + '\n---\nHistory: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
@@ -41,6 +99,10 @@ Object.assign(TE.prototype, TE_History);</code></pre>
       <h3>editor.redo()</h3>
       <p>Redo previous action.</p>
     </main>
+    <footer>
+      <hr>
+      <p>&copy; 2021 <a href="/">Taufik Nurrohman</a></p>
+    </footer>
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>
     <script>

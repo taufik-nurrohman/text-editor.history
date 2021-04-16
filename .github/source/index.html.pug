@@ -1,7 +1,7 @@
 extends _index.pug
 
 block state
-  - const title = 'History \xB7 Text Editor'
+  - const title = 'Text Editor History ' + version
   - const scripts = ['../text-editor/index.min.js', 'index.min.js']
 
 block script
@@ -18,7 +18,60 @@ block script
     |     setTimeout(() => editor.record(), 1); // Record keyboard interaction
     | });
 
+block style
+  style
+    | * {
+    |   box-sizing: border-box;
+    | }
+    | :root {
+    |   background: #fff;
+    |   color: #000;
+    |   border-top: 4px solid;
+    |   font: normal normal 16px/1.25 serif;
+    | }
+    | a {
+    |   color: #009;
+    |   text-decoration: none;
+    | }
+    | a, code {
+    |   word-wrap: break-word;
+    | }
+    | code {
+    |   font-family: monospace;
+    |   font-size: 80%;
+    | }
+    | footer, header, main, nav {
+    |   max-width: 700px;
+    |   margin: 0 auto;
+    | }
+    | hr {
+    |   border: 0;
+    |   color: inherit;
+    |   border-top: 1px dashed;
+    |   height: 0;
+    | }
+    | pre {
+    |   white-space: pre-wrap;
+    |   word-wrap: break-word;
+    | }
+    | pre code {
+    |   display: block;
+    |   background: #eee;
+    |   padding: 1em;
+    | }
+    | table {
+    |   width: 100%;
+    | }
+    | td, th {
+    |   text-align: left;
+    |   vertical-align: top;
+    | }
+
 block content
+  header
+    h1= title
+    p History extension for #[a(href='../text-editor/index.html') text editor].
+    hr
   main
     p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false')
     p
@@ -75,3 +128,8 @@ block content
     p Undo previous action.
     h3 editor.redo()
     p Redo previous action.
+  footer
+    hr
+    p
+      != '&copy; ' + year + ' '
+      a(href='/') Taufik Nurrohman
