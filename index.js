@@ -26,8 +26,8 @@
  *
  */
 (function(global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) : typeof define === 'function' && define.amd ? define(['exports'], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.TE = global.TE || {}, global.TE.History = {})));
-})(this, function(exports) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.TE = global.TE || {}, global.TE.History = factory()));
+})(this, function() {
     'use strict';
     var isDefined = function isDefined(x) {
         return 'undefined' !== typeof x;
@@ -50,16 +50,17 @@
         }
         return x;
     };
-    let _history = [];
-    let _historyState = -1; // Get history data
-    const history = function(index) {
+    const that = {};
+    that._history = [];
+    that._historyState = -1; // Get history data
+    that.history = function(index) {
         let t = this;
         if (!isSet(index)) {
             return t._history;
         }
         return isSet(t._history[index]) ? t._history[index] : null;
     }; // Remove state from history
-    const loss = function(index) {
+    that.loss = function(index) {
         let t = this,
             current;
         if (true === index) {
@@ -71,7 +72,7 @@
         t._historyState = toEdge(t._historyState - 1, [-1]);
         return current;
     }; // Save current state to history
-    const record = function(index) {
+    that.record = function(index) {
         let t = this,
             {
                 end,
@@ -85,25 +86,22 @@
         ++t._historyState;
         return t._history[isSet(index) ? index : t._historyState] = next, t;
     }; // Redo previous state
-    const redo = function() {
+    that.redo = function() {
         let t = this,
             state;
         t._historyState = toEdge(t._historyState + 1, [0, toCount(t._history) - 1]);
         state = t._history[t._historyState];
         return t.set(state[0]).select(state[1], state[2]);
     }; // Undo current state
-    const undo = function() {
+    that.undo = function() {
         let t = this,
             state;
         t._historyState = toEdge(t._historyState - 1, [0, toCount(t._history) - 1]);
         state = t._history[t._historyState];
         return t.set(state[0]).select(state[1], state[2]);
     };
-    exports._history = _history;
-    exports._historyState = _historyState;
-    exports.history = history;
-    exports.loss = loss;
-    exports.record = record;
-    exports.redo = redo;
-    exports.undo = undo;
+    var _virtual_entry = {
+        that
+    };
+    return _virtual_entry;
 });

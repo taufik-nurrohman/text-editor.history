@@ -6,17 +6,27 @@ block state
 
 block script
   script
-    | Object.assign(TE.prototype, TE.History);
+    | Object.assign(TE.prototype, TE.History.that);
     |
     | const editor = new TE(document.querySelector('#in'));
     |
     | let dump = document.querySelector('#out');
     |
-    | editor.record(); // Record the initial value
-    |
-    | editor.self.addEventListener('keydown', () => {
+    | editor.self.addEventListener('keydown', e => {
+    |     if (e.ctrlKey && 'y' === e.key) {
+    |         editor.redo();
+    |         e.preventDefault();
+    |         return;
+    |     }
+    |     if (e.ctrlKey && 'z' === e.key) {
+    |         editor.undo();
+    |         e.preventDefault();
+    |         return;
+    |     }
     |     setTimeout(() => editor.record(), 1); // Record keyboard interaction
     | });
+    |
+    | editor.record(); // Record the initial value
 
 block style
   style
@@ -72,22 +82,9 @@ block content
     h1= title
     p History extension for #[a(href='../text-editor/index.html') text editor].
     hr
+    p Provides custom history feature to overcome the side effect of manipulating a #[code &lt;textarea&gt;] value that cannot automatically update the default history data.
   main
     p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false')
-    p
-      button(onclick='dump.innerHTML = \'Index: \' + editor._historyState + \'\\n---\\nHistory: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
-      = ' '
-      button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
-      = ' '
-      button(onclick='editor.record();') Save Selection to History
-      = ' '
-      button(onclick='editor.loss();') Delete Current History
-      = ' '
-      button(onclick='editor.loss(editor._historyState);') Delete the Last History
-      = ' '
-      button(onclick='editor.loss(0);') Delete the First History
-      = ' '
-      button(onclick='editor.loss(true);') Delete All History
     p
       button(onclick='editor.record().wrap(\'**\', \'**\').record();'): b B
       = ' '
@@ -96,28 +93,42 @@ block content
       button(onclick='editor.undo();') Undo
       = ' '
       button(onclick='editor.redo();') Redo
-    pre#out: code
+    p
+      button(onclick='dump.innerHTML = \'Index: \' + editor._historyState + \'\\n---\\nHistory: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
+      = ' '
+      button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
+      = ' '
+      button(onclick='editor.record();') Save Selection to History
+    p
+      button(onclick='editor.loss();') Delete Current History
+      = ' '
+      button(onclick='editor.loss(editor._historyState);') Delete the Last History
+      = ' '
+      button(onclick='editor.loss(0);') Delete the First History
+      = ' '
+      button(onclick='editor.loss(true);') Delete All History
+    pre#out
     h2 Usage
     h4 Browser
     pre: code
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
-      | Object.assign(TE.prototype, TE.History);
+      | Object.assign(TE.prototype, TE.History.that);
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor');
-      | const TE_History = require('@taufik-nurrohman/text-editor.history');
+      | const {that} = require('@taufik-nurrohman/text-editor.history');
       |
-      | Object.assign(TE.prototype, TE_History);
+      | Object.assign(TE.prototype, that);
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import * as TE_History from '@taufik-nurrohman/text-editor.history';
+      | import {that} from '@taufik-nurrohman/text-editor.history';
       |
-      | Object.assign(TE.prototype, TE_History);
-    h2 Methods and Properties
+      | Object.assign(TE.prototype, that);
+    h2 Methods
     h3 editor.history(index)
     p Get history data.
     h3 editor.record(index)

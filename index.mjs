@@ -1,11 +1,13 @@
 import {isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
-export let _history = [];
-export let _historyState = -1;
+const that = {};
+
+that._history = [];
+that._historyState = -1;
 
 // Get history data
-export const history = function(index) {
+that.history = function(index) {
     let t = this;
     if (!isSet(index)) {
         return t._history;
@@ -14,7 +16,7 @@ export const history = function(index) {
 };
 
 // Remove state from history
-export const loss = function(index) {
+that.loss = function(index) {
     let t = this,
         current;
     if (true === index) {
@@ -28,7 +30,7 @@ export const loss = function(index) {
 };
 
 // Save current state to history
-export const record = function(index) {
+that.record = function(index) {
     let t = this,
         {end, start} = t.$(),
         current = t._history[t._historyState] || [],
@@ -45,7 +47,7 @@ export const record = function(index) {
 };
 
 // Redo previous state
-export const redo = function() {
+that.redo = function() {
     let t = this,
         state;
     t._historyState = toEdge(t._historyState + 1, [0, toCount(t._history) - 1]);
@@ -54,10 +56,12 @@ export const redo = function() {
 };
 
 // Undo current state
-export const undo = function() {
+that.undo = function() {
     let t = this,
         state;
     t._historyState = toEdge(t._historyState - 1, [0, toCount(t._history) - 1]);
     state = t._history[t._historyState];
     return t.set(state[0]).select(state[1], state[2]);
 };
+
+export default {that};
