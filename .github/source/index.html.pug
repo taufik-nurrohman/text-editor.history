@@ -119,13 +119,13 @@ block content
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor');
-      | const {that as thatHistory} = require('@taufik-nurrohman/text-editor.history');
+      | const {that: thatHistory} = require('@taufik-nurrohman/text-editor.history');
       |
       | Object.assign(TE.prototype, thatHistory);
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import {that as thatHistory} from '@taufik-nurrohman/text-editor.history';
+      | import {that: thatHistory} from '@taufik-nurrohman/text-editor.history';
       |
       | Object.assign(TE.prototype, thatHistory);
     h2 Methods
