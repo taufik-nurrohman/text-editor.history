@@ -119,15 +119,15 @@ block content
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor');
-      | const {that} = require('@taufik-nurrohman/text-editor.history');
+      | const {that as thatHistory} = require('@taufik-nurrohman/text-editor.history');
       |
-      | Object.assign(TE.prototype, that);
+      | Object.assign(TE.prototype, thatHistory);
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import {that} from '@taufik-nurrohman/text-editor.history';
+      | import {that as thatHistory} from '@taufik-nurrohman/text-editor.history';
       |
-      | Object.assign(TE.prototype, that);
+      | Object.assign(TE.prototype, thatHistory);
     h2 Methods
     h3 editor.history(index)
     p Get history data.
