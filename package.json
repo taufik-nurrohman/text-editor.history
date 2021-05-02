@@ -3,13 +3,13 @@
   "browser": "index.min.js",
   "bugs": "https://github.com/taufik-nurrohman/text-editor.history/issues",
   "dependencies": {
-    "@taufik-nurrohman/text-editor": "^3.3.1"
+    "@taufik-nurrohman/is": "^0.1.1",
+    "@taufik-nurrohman/text-editor": "^3.3.2",
+    "@taufik-nurrohman/to": "^0.0.17"
   },
   "description": "Provides custom history feature to overcome the side effect of manipulating a `<textarea>` value that cannot automatically update the default history data.",
   "devDependencies": {
-    "@taufik-nurrohman/factory": "^0.1.11",
-    "@taufik-nurrohman/is": "^0.1.0",
-    "@taufik-nurrohman/to": "^0.0.16"
+    "@taufik-nurrohman/factory": "^0.1.12"
   },
   "exports": {
     "import": "./index.mjs",
@@ -46,5 +46,5 @@
     "pack": "pack --clean=false --from=.github/source --js-format=umd --js-name=TE.History --js-top='%(js.license)' --mjs=true --to=."
   },
   "type": "module",
-  "version": "2.1.2"
+  "version": "2.1.3"
 }
