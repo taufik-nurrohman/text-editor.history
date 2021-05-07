@@ -1,7 +1,7 @@
 import {isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
-const that = {};
+export const that = {};
 
 that._history = [];
 that._historyState = -1;
@@ -63,5 +63,3 @@ that.undo = function() {
     state = t._history[t._historyState];
     return t.set(state[0]).select(state[1], state[2]);
 };
-
-export default {that};

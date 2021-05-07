@@ -26,8 +26,8 @@
  *
  */
 (function(global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.TE = global.TE || {}, global.TE.History = factory()));
-})(this, function() {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) : typeof define === 'function' && define.amd ? define(['exports'], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.TE = global.TE || {}, global.TE.History = {})));
+})(this, function(exports) {
     'use strict';
     var isDefined = function isDefined(x) {
         return 'undefined' !== typeof x;
@@ -100,8 +100,5 @@
         state = t._history[t._historyState];
         return t.set(state[0]).select(state[1], state[2]);
     };
-    var _virtual_entry = {
-        that
-    };
-    return _virtual_entry;
+    exports.that = that;
 });
