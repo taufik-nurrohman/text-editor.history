@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 2.1.10</title>
+    <title>Text Editor History 2.1.11</title>
     <style>
       * {
         box-sizing: border-box;
@@ -14,6 +14,7 @@
         color: #000;
         border-top: 4px solid;
         font: normal normal 16px/1.25 serif;
+        position: relative;
       }
       a {
         color: #009;
@@ -40,6 +41,14 @@
         border-top: 1px dashed;
         height: 0;
       }
+      mark {
+        display: inline-block;
+        vertical-align: middle;
+        height: 1.25em;
+        background: #ff0;
+        border: 1px solid #f00;
+        min-width: 3px;
+      }
       pre {
         white-space: pre-wrap;
         word-wrap: break-word;
@@ -61,7 +70,7 @@
   </head>
   <body>
     <header>
-      <h1>Text Editor History 2.1.10</h1>
+      <h1>Text Editor History 2.1.11</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
