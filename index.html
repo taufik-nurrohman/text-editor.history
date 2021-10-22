@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 2.1.11</title>
+    <title>Text Editor History 2.1.13</title>
     <style>
       * {
         box-sizing: border-box;
@@ -70,7 +70,7 @@
   </head>
   <body>
     <header>
-      <h1>Text Editor History 2.1.11</h1>
+      <h1>Text Editor History 2.1.13</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
@@ -118,11 +118,8 @@ Object.assign(TE.prototype, thatHistory);</code></pre>
     <script src="index.min.js"></script>
     <script>
       Object.assign(TE.prototype, TE.History.that);
-
       const editor = new TE(document.querySelector('#in'));
-
       let dump = document.querySelector('#out');
-
       editor.self.addEventListener('keydown', e => {
           if (e.ctrlKey && 'y' === e.key) {
               editor.redo();
@@ -136,7 +133,6 @@ Object.assign(TE.prototype, thatHistory);</code></pre>
           }
           setTimeout(() => editor.record(), 1); // Record keyboard interaction
       });
-
       editor.record(); // Record the initial value
     </script>
   </body>
