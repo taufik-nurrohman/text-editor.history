@@ -127,8 +127,8 @@ block content
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
-      | const TE = require('@taufik-nurrohman/text-editor');
-      | const {that: thatHistory} = require('@taufik-nurrohman/text-editor.history');
+      | const TE = require('@taufik-nurrohman/text-editor').default;
+      | const {that: thatHistory} = require('@taufik-nurrohman/text-editor.history').default;
       |
       | Object.assign(TE.prototype, thatHistory);
     h4 ECMAScript
