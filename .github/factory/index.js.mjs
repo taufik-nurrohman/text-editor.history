@@ -7,7 +7,7 @@ that._history = [];
 that._historyState = -1;
 
 // Get history data
-that.history = function(index) {
+that.history = function (index) {
     let t = this;
     if (!isSet(index)) {
         return t._history;
@@ -16,7 +16,7 @@ that.history = function(index) {
 };
 
 // Remove state from history
-that.loss = function(index) {
+that.loss = function (index) {
     let t = this,
         current;
     if (true === index) {
@@ -30,7 +30,7 @@ that.loss = function(index) {
 };
 
 // Save current state to history
-that.record = function(index) {
+that.record = function (index) {
     let t = this,
         {end, start} = t.$(),
         current = t._history[t._historyState] || [],
@@ -47,7 +47,7 @@ that.record = function(index) {
 };
 
 // Redo previous state
-that.redo = function() {
+that.redo = function () {
     let t = this,
         state;
     t._historyState = toEdge(t._historyState + 1, [0, toCount(t._history) - 1]);
@@ -56,7 +56,7 @@ that.redo = function() {
 };
 
 // Undo current state
-that.undo = function() {
+that.undo = function () {
     let t = this,
         state;
     t._historyState = toEdge(t._historyState - 1, [0, toCount(t._history) - 1]);
