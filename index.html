@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 2.1.15</title>
+    <title>Text Editor History 2.1.16</title>
     <style>
       * {
         box-sizing: border-box;
       }
       :root {
         background: #fff;
-        color: #000;
         border-top: 4px solid;
+        color: #000;
         font: normal normal 16px/1.25 serif;
         position: relative;
       }
@@ -32,30 +32,30 @@
       header,
       main,
       nav {
-        max-width: 700px;
         margin: 0 auto;
+        max-width: 700px;
       }
       hr {
         border: 0;
-        color: inherit;
         border-top: 1px dashed;
+        color: inherit;
         height: 0;
       }
       mark {
-        display: inline-block;
-        vertical-align: middle;
-        height: 1.25em;
         background: #ff0;
         border: 1px solid #f00;
+        display: inline-block;
+        height: 1.25em;
         min-width: 3px;
+        vertical-align: middle;
       }
       pre {
         white-space: pre-wrap;
         word-wrap: break-word;
       }
       pre code {
-        display: block;
         background: #eee;
+        display: block;
         padding: 1em;
       }
       table {
@@ -70,7 +70,7 @@
   </head>
   <body>
     <header>
-      <h1>Text Editor History 2.1.15</h1>
+      <h1>Text Editor History 2.1.16</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
@@ -86,33 +86,36 @@
       <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script&gt;
+  // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
   Object.assign(TE.prototype, TE.History.that);
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
       <pre><code>const TE = require('@taufik-nurrohman/text-editor').default;
-const {that: thatHistory} = require('@taufik-nurrohman/text-editor.history').default;
+const {that} = require('@taufik-nurrohman/text-editor.history').default;
 
-Object.assign(TE.prototype, thatHistory);</code></pre>
+// Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
+Object.assign(TE.prototype, that);</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TE from '@taufik-nurrohman/text-editor';
-import {that as thatHistory} from '@taufik-nurrohman/text-editor.history';
+import {that} from '@taufik-nurrohman/text-editor.history';
 
-Object.assign(TE.prototype, thatHistory);</code></pre>
+// Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
+Object.assign(TE.prototype, that);</code></pre>
       <h2>Methods</h2>
       <h3>editor.history(index)</h3>
       <p>Get history data.</p>
-      <h3>editor.record(index)</h3>
-      <p>Store current value and selection to history.</p>
       <h3>editor.loss(index)</h3>
       <p>Remove previous history data.</p>
-      <h3>editor.undo()</h3>
-      <p>Undo previous action.</p>
+      <h3>editor.record(index)</h3>
+      <p>Store current value and selection to history.</p>
       <h3>editor.redo()</h3>
       <p>Redo previous action.</p>
+      <h3>editor.undo()</h3>
+      <p>Undo previous action.</p>
     </main>
     <footer>
       <hr>
-      <p>&copy; 2022 <a href="/">Taufik Nurrohman</a></p>
+      <p>&copy; 2023 <a href="/">Taufik Nurrohman</a></p>
     </footer>
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>

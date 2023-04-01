@@ -35,8 +35,8 @@ block style
     | }
     | :root {
     |   background: #fff;
-    |   color: #000;
     |   border-top: 4px solid;
+    |   color: #000;
     |   font: normal normal 16px/1.25 serif;
     |   position: relative;
     | }
@@ -52,30 +52,30 @@ block style
     |   font-size: 80%;
     | }
     | footer, header, main, nav {
-    |   max-width: 700px;
     |   margin: 0 auto;
+    |   max-width: 700px;
     | }
     | hr {
     |   border: 0;
-    |   color: inherit;
     |   border-top: 1px dashed;
+    |   color: inherit;
     |   height: 0;
     | }
     | mark {
-    |   display: inline-block;
-    |   vertical-align: middle;
-    |   height: 1.25em;
     |   background: #ff0;
     |   border: 1px solid #f00;
+    |   display: inline-block;
+    |   height: 1.25em;
     |   min-width: 3px;
+    |   vertical-align: middle;
     | }
     | pre {
     |   white-space: pre-wrap;
     |   word-wrap: break-word;
     | }
     | pre code {
-    |   display: block;
     |   background: #eee;
+    |   display: block;
     |   padding: 1em;
     | }
     | table {
@@ -123,31 +123,34 @@ block content
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
+      |   // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
       |   Object.assign(TE.prototype, TE.History.that);
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor').default;
-      | const {that: thatHistory} = require('@taufik-nurrohman/text-editor.history').default;
+      | const {that} = require('@taufik-nurrohman/text-editor.history').default;
       |
-      | Object.assign(TE.prototype, thatHistory);
+      | // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
+      | Object.assign(TE.prototype, that);
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import {that as thatHistory} from '@taufik-nurrohman/text-editor.history';
+      | import {that} from '@taufik-nurrohman/text-editor.history';
       |
-      | Object.assign(TE.prototype, thatHistory);
+      | // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
+      | Object.assign(TE.prototype, that);
     h2 Methods
     h3 editor.history(index)
     p Get history data.
-    h3 editor.record(index)
-    p Store current value and selection to history.
     h3 editor.loss(index)
     p Remove previous history data.
-    h3 editor.undo()
-    p Undo previous action.
+    h3 editor.record(index)
+    p Store current value and selection to history.
     h3 editor.redo()
     p Redo previous action.
+    h3 editor.undo()
+    p Undo previous action.
   footer
     hr
     p

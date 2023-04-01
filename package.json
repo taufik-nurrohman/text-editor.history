@@ -45,5 +45,5 @@
   "scripts": {
     "pack": "pack --clean=false --from=.github/factory --js-format=umd --js-name=TE.History --js-top='%(js.license)' --mjs=true --to=."
   },
-  "version": "2.1.15"
+  "version": "2.1.16"
 }
