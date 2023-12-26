@@ -23,10 +23,13 @@
  * SOFTWARE.
  *
  */
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) : typeof define === 'function' && define.amd ? define(['exports'], factory) : (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.TE = global.TE || {}, global.TE.History = {})));
-})(this, function (exports) {
+(function (g, f) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? f(exports) : typeof define === 'function' && define.amd ? define(['exports'], f) : (g = typeof globalThis !== 'undefined' ? globalThis : g || self, f((g.TE = g.TE || {}, g.TE.History = {})));
+})(this, (function (exports) {
     'use strict';
+    var isArray = function isArray(x) {
+        return Array.isArray(x);
+    };
     var isDefined = function isDefined(x) {
         return 'undefined' !== typeof x;
     };
@@ -48,55 +51,61 @@
         }
         return x;
     };
-    const that = {};
-    that._history = [];
-    that._historyState = -1; // Get history data
-    that.history = function (index) {
-        let t = this;
-        if (!isSet(index)) {
-            return t._history;
-        }
-        return isSet(t._history[index]) ? t._history[index] : null;
-    }; // Remove state from history
-    that.loss = function (index) {
-        let t = this,
-            current;
-        if (true === index) {
-            t._history = [];
-            t._historyState = -1;
-            return [];
-        }
-        current = t._history.splice(isSet(index) ? index : t._historyState, 1);
-        t._historyState = toEdge(t._historyState - 1, [-1]);
-        return current;
-    }; // Save current state to history
-    that.record = function (index) {
-        let t = this,
-            {
-                end,
-                start
-            } = t.$(),
-            current = t._history[t._historyState] || [],
-            next = [t.self.value, start, end];
-        if (next[0] === current[0] && next[1] === current[1] && next[2] === current[2]) {
-            return t; // Do not save duplicate
-        }
-        ++t._historyState;
-        return t._history[isSet(index) ? index : t._historyState] = next, t;
-    }; // Redo previous state
-    that.redo = function () {
-        let t = this,
-            state;
-        t._historyState = toEdge(t._historyState + 1, [0, toCount(t._history) - 1]);
-        state = t._history[t._historyState];
-        return t.set(state[0]).select(state[1], state[2]);
-    }; // Undo current state
-    that.undo = function () {
-        let t = this,
-            state;
-        t._historyState = toEdge(t._historyState - 1, [0, toCount(t._history) - 1]);
-        state = t._history[t._historyState];
-        return t.set(state[0]).select(state[1], state[2]);
-    };
-    exports.that = that;
-});
+    var _window$TE$state$with, _window;
+
+    function history(source, state) {
+        var $ = this;
+        $._history = [];
+        $._historyState = -1;
+        // Get history data
+        $.history = function (index) {
+            if (!isSet(index)) {
+                return $._history;
+            }
+            return isSet($._history[index]) ? $._history[index] : null;
+        };
+        // Remove state from history
+        $.loss = function (index) {
+            var current;
+            if (true === index) {
+                $._history = [];
+                $._historyState = -1;
+                return [];
+            }
+            current = $._history.splice(isSet(index) ? index : $._historyState, 1);
+            $._historyState = toEdge($._historyState - 1, [-1]);
+            return current;
+        };
+        // Save current state to history
+        $.record = function (index) {
+            var _$$$ = $.$(),
+                end = _$$$.end,
+                start = _$$$.start,
+                current = $._history[$._historyState] || [],
+                next = [source.value, start, end];
+            if (next[0] === current[0] && next[1] === current[1] && next[2] === current[2]) {
+                return $; // Do not save duplicate
+            }
+            ++$._historyState;
+            return $._history[isSet(index) ? index : $._historyState] = next, $;
+        };
+        // Redo previous state
+        $.redo = function () {
+            var state;
+            $._historyState = toEdge($._historyState + 1, [0, toCount($._history) - 1]);
+            state = $._history[$._historyState];
+            return $.set(state[0]).select(state[1], state[2]);
+        };
+        // Undo current state
+        $.undo = function () {
+            var state;
+            $._historyState = toEdge($._historyState - 1, [0, toCount($._history) - 1]);
+            state = $._history[$._historyState];
+            return $.set(state[0]).select(state[1], state[2]);
+        };
+    }
+    // @if iife
+    isArray((_window$TE$state$with = (_window = window) == null || (_window = _window.TE) == null || (_window = _window.state) == null ? void 0 : _window.with) != null ? _window$TE$state$with : 0) && window.TE.state.with.push(history);
+    // @end-if
+    exports.history = history;
+}));

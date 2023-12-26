@@ -1,65 +1,60 @@
-import {isSet} from '@taufik-nurrohman/is';
+import {isArray, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
-export const that = {};
+export function history(source, state) {
+    let $ = this;
+    $._history = [];
+    $._historyState = -1;
+    // Get history data
+    $.history = function (index) {
+        if (!isSet(index)) {
+            return $._history;
+        }
+        return isSet($._history[index]) ? $._history[index] : null;
+    };
+    // Remove state from history
+    $.loss = function (index) {
+        let current;
+        if (true === index) {
+            $._history = [];
+            $._historyState = -1;
+            return [];
+        }
+        current = $._history.splice(isSet(index) ? index : $._historyState, 1);
+        $._historyState = toEdge($._historyState - 1, [-1]);
+        return current;
+    };
+    // Save current state to history
+    $.record = function (index) {
+            let {end, start} = $.$(),
+            current = $._history[$._historyState] || [],
+            next = [source.value, start, end];
+        if (
+            next[0] === current[0] &&
+            next[1] === current[1] &&
+            next[2] === current[2]
+        ) {
+            return $; // Do not save duplicate
+        }
+        ++$._historyState;
+        return ($._history[isSet(index) ? index : $._historyState] = next), $;
+    };
+    // Redo previous state
+    $.redo = function () {
+        let state;
+        $._historyState = toEdge($._historyState + 1, [0, toCount($._history) - 1]);
+        state = $._history[$._historyState];
+        return $.set(state[0]).select(state[1], state[2]);
+    };
+    // Undo current state
+    $.undo = function () {
+        let state;
+        $._historyState = toEdge($._historyState - 1, [0, toCount($._history) - 1]);
+        state = $._history[$._historyState];
+        return $.set(state[0]).select(state[1], state[2]);
+    };
+}
 
-that._history = [];
-that._historyState = -1;
-
-// Get history data
-that.history = function (index) {
-    let t = this;
-    if (!isSet(index)) {
-        return t._history;
-    }
-    return isSet(t._history[index]) ? t._history[index] : null;
-};
-
-// Remove state from history
-that.loss = function (index) {
-    let t = this,
-        current;
-    if (true === index) {
-        t._history = [];
-        t._historyState = -1;
-        return [];
-    }
-    current = t._history.splice(isSet(index) ? index : t._historyState, 1);
-    t._historyState = toEdge(t._historyState - 1, [-1]);
-    return current;
-};
-
-// Save current state to history
-that.record = function (index) {
-    let t = this,
-        {end, start} = t.$(),
-        current = t._history[t._historyState] || [],
-        next = [t.self.value, start, end];
-    if (
-        next[0] === current[0] &&
-        next[1] === current[1] &&
-        next[2] === current[2]
-    ) {
-        return t; // Do not save duplicate
-    }
-    ++t._historyState;
-    return (t._history[isSet(index) ? index : t._historyState] = next), t;
-};
-
-// Redo previous state
-that.redo = function () {
-    let t = this,
-        state;
-    t._historyState = toEdge(t._historyState + 1, [0, toCount(t._history) - 1]);
-    state = t._history[t._historyState];
-    return t.set(state[0]).select(state[1], state[2]);
-};
-
-// Undo current state
-that.undo = function () {
-    let t = this,
-        state;
-    t._historyState = toEdge(t._historyState - 1, [0, toCount(t._history) - 1]);
-    state = t._history[t._historyState];
-    return t.set(state[0]).select(state[1], state[2]);
-};
+// @if iife
+isArray(window?.TE?.state?.with ?? 0) && window.TE.state.with.push(history);
+// @end-if

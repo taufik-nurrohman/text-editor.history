@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 2.1.16</title>
+    <title>Text Editor History 3.0.0</title>
     <style>
       * {
         box-sizing: border-box;
@@ -70,7 +70,7 @@
   </head>
   <body>
     <header>
-      <h1>Text Editor History 2.1.16</h1>
+      <h1>Text Editor History 3.0.0</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
@@ -86,21 +86,26 @@
       <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script&gt;
-  // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-  Object.assign(TE.prototype, TE.History.that);
+  let editor = new TE(document.querySelector('textarea'));
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
       <pre><code>const TE = require('@taufik-nurrohman/text-editor').default;
-const {that} = require('@taufik-nurrohman/text-editor.history').default;
+const {history} = require('@taufik-nurrohman/text-editor.history');
 
-// Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-Object.assign(TE.prototype, that);</code></pre>
+TE.state.with.push(history); // Load as a core extension
+
+let editor = new TE(document.querySelector('textarea'), {
+        with: [history] // Load as an optional extension
+    });</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TE from '@taufik-nurrohman/text-editor';
-import {that} from '@taufik-nurrohman/text-editor.history';
+import {history} from '@taufik-nurrohman/text-editor.history';
 
-// Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-Object.assign(TE.prototype, that);</code></pre>
+TE.state.with.push(history); // Load as a core extension
+
+let editor = new TE(document.querySelector('textarea'), {
+        with: [history] // Load as an optional extension
+    });</code></pre>
       <h2>Methods</h2>
       <h3>editor.history(index)</h3>
       <p>Get history data.</p>
@@ -120,7 +125,6 @@ Object.assign(TE.prototype, that);</code></pre>
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>
     <script>
-      Object.assign(TE.prototype, TE.History.that);
       const editor = new TE(document.querySelector('#in'));
       let dump = document.querySelector('#out');
       editor.self.addEventListener('keydown', e => {

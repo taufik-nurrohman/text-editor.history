@@ -6,8 +6,6 @@ block state
 
 block script
   script
-    | Object.assign(TE.prototype, TE.History.that);
-    |
     | const editor = new TE(document.querySelector('#in'));
     |
     | let dump = document.querySelector('#out');
@@ -123,23 +121,28 @@ block content
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
-      |   // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-      |   Object.assign(TE.prototype, TE.History.that);
+      |   let editor = new TE(document.querySelector('textarea'));
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
       | const TE = require('@taufik-nurrohman/text-editor').default;
-      | const {that} = require('@taufik-nurrohman/text-editor.history').default;
+      | const {history} = require('@taufik-nurrohman/text-editor.history');
       |
-      | // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-      | Object.assign(TE.prototype, that);
+      | TE.state.with.push(history); // Load as a core extension
+      |
+      | let editor = new TE(document.querySelector('textarea'), {
+      |         with: [history] // Load as an optional extension
+      |     });
     h4 ECMAScript
     pre: code
       | import TE from '@taufik-nurrohman/text-editor';
-      | import {that} from '@taufik-nurrohman/text-editor.history';
+      | import {history} from '@taufik-nurrohman/text-editor.history';
       |
-      | // Add `history()`, `loss()`, `record()`, `redo()`, and `undo()` methods to `TE`
-      | Object.assign(TE.prototype, that);
+      | TE.state.with.push(history); // Load as a core extension
+      |
+      | let editor = new TE(document.querySelector('textarea'), {
+      |         with: [history] // Load as an optional extension
+      |     });
     h2 Methods
     h3 editor.history(index)
     p Get history data.
