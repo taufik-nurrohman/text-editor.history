@@ -1,7 +1,7 @@
 import {isArray, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
-export function history(source, state) {
+export default function History(self) {
     let $ = this;
     $._history = [];
     $._historyState = -1;
@@ -28,7 +28,7 @@ export function history(source, state) {
     $.record = function (index) {
             let {end, start} = $.$(),
             current = $._history[$._historyState] || [],
-            next = [source.value, start, end];
+            next = [self.value, start, end];
         if (
             next[0] === current[0] &&
             next[1] === current[1] &&
@@ -53,8 +53,5 @@ export function history(source, state) {
         state = $._history[$._historyState];
         return $.set(state[0]).select(state[1], state[2]);
     };
+    return $;
 }
-
-// @if iife
-isArray(window?.TE?.state?.with ?? 0) && window.TE.state.with.push(history);
-// @end-if

@@ -6,7 +6,9 @@ block state
 
 block script
   script
-    | const editor = new TE(document.querySelector('#in'));
+    | const editor = new TextEditor(document.querySelector('#in'), {
+    |     with: [TextEditor.History]
+    | });
     |
     | let dump = document.querySelector('#out');
     |
@@ -121,28 +123,30 @@ block content
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
-      |   let editor = new TE(document.querySelector('textarea'));
+      |   const editor = new TextEditor(document.querySelector('textarea'), {
+      |       with: [TextEditor.History]
+      |   });
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
-      | const TE = require('@taufik-nurrohman/text-editor').default;
-      | const {history} = require('@taufik-nurrohman/text-editor.history');
+      | const TextEditor = require('@taufik-nurrohman/text-editor').default;
+      | const History = require('@taufik-nurrohman/text-editor.history').default;
       |
-      | TE.state.with.push(history); // Load as a core extension
+      | TextEditor.state.with.push(History); // Load as a core extension
       |
-      | let editor = new TE(document.querySelector('textarea'), {
-      |         with: [history] // Load as an optional extension
-      |     });
+      | const editor = new TextEditor(document.querySelector('textarea'), {
+      |     with: [History] // Load as an optional extension
+      | });
     h4 ECMAScript
     pre: code
-      | import TE from '@taufik-nurrohman/text-editor';
-      | import {history} from '@taufik-nurrohman/text-editor.history';
+      | import TextEditor from '@taufik-nurrohman/text-editor';
+      | import History from '@taufik-nurrohman/text-editor.history';
       |
-      | TE.state.with.push(history); // Load as a core extension
+      | TextEditor.state.with.push(History); // Load as a core extension
       |
-      | let editor = new TE(document.querySelector('textarea'), {
-      |         with: [history] // Load as an optional extension
-      |     });
+      | const editor = new TextEditor(document.querySelector('textarea'), {
+      |     with: [History] // Load as an optional extension
+      | });
     h2 Methods
     h3 editor.history(index)
     p Get history data.

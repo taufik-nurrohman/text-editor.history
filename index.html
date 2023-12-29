@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 3.0.0</title>
+    <title>Text Editor History 4.0.0</title>
     <style>
       * {
         box-sizing: border-box;
@@ -70,7 +70,7 @@
   </head>
   <body>
     <header>
-      <h1>Text Editor History 3.0.0</h1>
+      <h1>Text Editor History 4.0.0</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
@@ -86,26 +86,28 @@
       <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script&gt;
-  let editor = new TE(document.querySelector('textarea'));
+  const editor = new TextEditor(document.querySelector('textarea'), {
+      with: [TextEditor.History]
+  });
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
-      <pre><code>const TE = require('@taufik-nurrohman/text-editor').default;
-const {history} = require('@taufik-nurrohman/text-editor.history');
+      <pre><code>const TextEditor = require('@taufik-nurrohman/text-editor').default;
+const History = require('@taufik-nurrohman/text-editor.history').default;
 
-TE.state.with.push(history); // Load as a core extension
+TextEditor.state.with.push(History); // Load as a core extension
 
-let editor = new TE(document.querySelector('textarea'), {
-        with: [history] // Load as an optional extension
-    });</code></pre>
+const editor = new TextEditor(document.querySelector('textarea'), {
+    with: [History] // Load as an optional extension
+});</code></pre>
       <h4>ECMAScript</h4>
-      <pre><code>import TE from '@taufik-nurrohman/text-editor';
-import {history} from '@taufik-nurrohman/text-editor.history';
+      <pre><code>import TextEditor from '@taufik-nurrohman/text-editor';
+import History from '@taufik-nurrohman/text-editor.history';
 
-TE.state.with.push(history); // Load as a core extension
+TextEditor.state.with.push(History); // Load as a core extension
 
-let editor = new TE(document.querySelector('textarea'), {
-        with: [history] // Load as an optional extension
-    });</code></pre>
+const editor = new TextEditor(document.querySelector('textarea'), {
+    with: [History] // Load as an optional extension
+});</code></pre>
       <h2>Methods</h2>
       <h3>editor.history(index)</h3>
       <p>Get history data.</p>
@@ -125,7 +127,9 @@ let editor = new TE(document.querySelector('textarea'), {
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>
     <script>
-      const editor = new TE(document.querySelector('#in'));
+      const editor = new TextEditor(document.querySelector('#in'), {
+          with: [TextEditor.History]
+      });
       let dump = document.querySelector('#out');
       editor.self.addEventListener('keydown', e => {
           if (e.ctrlKey && 'y' === e.key) {

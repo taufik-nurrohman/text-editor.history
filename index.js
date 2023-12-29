@@ -24,12 +24,9 @@
  *
  */
 (function (g, f) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? f(exports) : typeof define === 'function' && define.amd ? define(['exports'], f) : (g = typeof globalThis !== 'undefined' ? globalThis : g || self, f((g.TE = g.TE || {}, g.TE.History = {})));
-})(this, (function (exports) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = f() : typeof define === 'function' && define.amd ? define(f) : (g = typeof globalThis !== 'undefined' ? globalThis : g || self, (g.TextEditor = g.TextEditor || {}, g.TextEditor.History = f()));
+})(this, (function () {
     'use strict';
-    var isArray = function isArray(x) {
-        return Array.isArray(x);
-    };
     var isDefined = function isDefined(x) {
         return 'undefined' !== typeof x;
     };
@@ -51,9 +48,8 @@
         }
         return x;
     };
-    var _window$TE$state$with, _window;
 
-    function history(source, state) {
+    function History(self) {
         var $ = this;
         $._history = [];
         $._historyState = -1;
@@ -82,7 +78,7 @@
                 end = _$$$.end,
                 start = _$$$.start,
                 current = $._history[$._historyState] || [],
-                next = [source.value, start, end];
+                next = [self.value, start, end];
             if (next[0] === current[0] && next[1] === current[1] && next[2] === current[2]) {
                 return $; // Do not save duplicate
             }
@@ -103,9 +99,7 @@
             state = $._history[$._historyState];
             return $.set(state[0]).select(state[1], state[2]);
         };
+        return $;
     }
-    // @if iife
-    isArray((_window$TE$state$with = (_window = window) == null || (_window = _window.TE) == null || (_window = _window.state) == null ? void 0 : _window.with) != null ? _window$TE$state$with : 0) && window.TE.state.with.push(history);
-    // @end-if
-    exports.history = history;
+    return History;
 }));
