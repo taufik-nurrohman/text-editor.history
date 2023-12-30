@@ -32,7 +32,15 @@ block script
 
 block style
   style
+    | :root {
+    |   border-top: 5px solid #00f;
+    | }
+    |
     | @media (min-width: 45rem) {
+    |   :root {
+    |     padding-bottom: 3rem;
+    |     padding-top: 3rem;
+    |   }
     |   body > * {
     |     margin-left: auto;
     |     margin-right: auto;
@@ -49,7 +57,7 @@ block content
   main
     p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false' style={
       'display': 'block',
-      'width': '100%',
+      'width': '100%'
     })
     p(role='group')
       button(onclick='editor.record().wrap(\'**\', \'**\').record();'): b B
@@ -60,7 +68,7 @@ block content
       = ' '
       button(onclick='editor.redo();') Redo
       = ' '
-      button(onclick='dump.innerHTML = \'Index: \' + editor._historyState + \'\\n---\\nHistory: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
+      button(onclick='dump.innerHTML = \'History: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
       button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
       = ' '
@@ -68,7 +76,7 @@ block content
       = ' '
       button(onclick='editor.loss();') Delete Current History
       = ' '
-      button(onclick='editor.loss(editor._historyState);') Delete the Last History
+      button(onclick='editor.loss(editor.history().length - 1);') Delete the Last History
       = ' '
       button(onclick='editor.loss(0);') Delete the First History
       = ' '
@@ -80,9 +88,13 @@ block content
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
+      |
       |   const editor = new TextEditor(document.querySelector('textarea'), {
       |       with: [TextEditor.History]
       |   });
+      |
+      |   editor.record(); // Record the initial value
+      |
       | &lt;/script&gt;
     h4 CommonJS
     pre: code
@@ -94,6 +106,8 @@ block content
       | const editor = new TextEditor(document.querySelector('textarea'), {
       |     with: [TextEditorHistory] // Load as an optional extension
       | });
+      |
+      | editor.record(); // Record the initial value
     h4 ECMAScript
     pre: code
       | import TextEditor from '@taufik-nurrohman/text-editor';
@@ -104,12 +118,14 @@ block content
       | const editor = new TextEditor(document.querySelector('textarea'), {
       |     with: [TextEditorHistory] // Load as an optional extension
       | });
+      |
+      | editor.record(); // Record the initial value
     h2 Methods
-    h3: code editor.history(index)
+    h3: code editor.history(of)
     p Get history data.
-    h3: code editor.loss(index)
+    h3: code editor.loss(of)
     p Remove previous history data.
-    h3: code editor.record(index)
+    h3: code editor.record(of)
     p Store current value and selection to history.
     h3: code editor.redo()
     p Redo previous action.

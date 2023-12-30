@@ -2,32 +2,32 @@ import {isArray, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
 export default function History(self) {
-    let $ = this;
-    $._history = [];
-    $._historyState = -1;
+    let $ = this,
+        history = [],
+        historyState = -1;
     // Get history data
-    $.history = function (index) {
-        if (!isSet(index)) {
-            return $._history;
+    $.history = function (of) {
+        if (!isSet(of)) {
+            return history;
         }
-        return isSet($._history[index]) ? $._history[index] : null;
+        return isSet(history[of]) ? history[of] : null;
     };
     // Remove state from history
-    $.loss = function (index) {
+    $.loss = function (of) {
         let current;
-        if (true === index) {
-            $._history = [];
-            $._historyState = -1;
+        if (true === of) {
+            history = [];
+            historyState = -1;
             return [];
         }
-        current = $._history.splice(isSet(index) ? index : $._historyState, 1);
-        $._historyState = toEdge($._historyState - 1, [-1]);
+        current = history.splice(isSet(of) ? of : historyState, 1);
+        historyState = toEdge(historyState - 1, [-1]);
         return current;
     };
     // Save current state to history
-    $.record = function (index) {
+    $.record = function (of) {
             let {end, start} = $.$(),
-            current = $._history[$._historyState] || [],
+            current = history[historyState] || [],
             next = [self.value, start, end];
         if (
             next[0] === current[0] &&
@@ -36,21 +36,21 @@ export default function History(self) {
         ) {
             return $; // Do not save duplicate
         }
-        ++$._historyState;
-        return ($._history[isSet(index) ? index : $._historyState] = next), $;
+        ++historyState;
+        return (history[isSet(of) ? of : historyState] = next), $;
     };
     // Redo previous state
     $.redo = function () {
         let state;
-        $._historyState = toEdge($._historyState + 1, [0, toCount($._history) - 1]);
-        state = $._history[$._historyState];
+        historyState = toEdge(historyState + 1, [0, toCount(history) - 1]);
+        state = history[historyState];
         return $.set(state[0]).select(state[1], state[2]);
     };
     // Undo current state
     $.undo = function () {
         let state;
-        $._historyState = toEdge($._historyState - 1, [0, toCount($._history) - 1]);
-        state = $._history[$._historyState];
+        historyState = toEdge(historyState - 1, [0, toCount(history) - 1]);
+        state = history[historyState];
         return $.set(state[0]).select(state[1], state[2]);
     };
     return $;

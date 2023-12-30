@@ -8,7 +8,15 @@
     <title>Text Editor: History 4.0.1</title>
     <link href="../layout/index.min.css" rel="stylesheet">
     <style>
+      :root {
+        border-top: 5px solid #00f;
+      }
+
       @media (min-width: 45rem) {
+        :root {
+          padding-bottom: 3rem;
+          padding-top: 3rem;
+        }
         body > * {
           margin-left: auto;
           margin-right: auto;
@@ -26,16 +34,20 @@
     </header>
     <main>
       <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
-      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = 'Index: ' + editor._historyState + '\n---\nHistory: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
+      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = 'History: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
       <h2>Usage</h2>
       <h4>Browser</h4>
       <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script&gt;
+
   const editor = new TextEditor(document.querySelector('textarea'), {
       with: [TextEditor.History]
   });
+
+  editor.record(); // Record the initial value
+
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
       <pre><code>const TextEditor = require('@taufik-nurrohman/text-editor').default;
@@ -45,7 +57,9 @@ TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
 
 const editor = new TextEditor(document.querySelector('textarea'), {
     with: [TextEditorHistory] // Load as an optional extension
-});</code></pre>
+});
+
+editor.record(); // Record the initial value</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TextEditor from '@taufik-nurrohman/text-editor';
 import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
@@ -54,13 +68,15 @@ TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
 
 const editor = new TextEditor(document.querySelector('textarea'), {
     with: [TextEditorHistory] // Load as an optional extension
-});</code></pre>
+});
+
+editor.record(); // Record the initial value</code></pre>
       <h2>Methods</h2>
-      <h3><code>editor.history(index)</code></h3>
+      <h3><code>editor.history(of)</code></h3>
       <p>Get history data.</p>
-      <h3><code>editor.loss(index)</code></h3>
+      <h3><code>editor.loss(of)</code></h3>
       <p>Remove previous history data.</p>
-      <h3><code>editor.record(index)</code></h3>
+      <h3><code>editor.record(of)</code></h3>
       <p>Store current value and selection to history.</p>
       <h3><code>editor.redo()</code></h3>
       <p>Redo previous action.</p>
