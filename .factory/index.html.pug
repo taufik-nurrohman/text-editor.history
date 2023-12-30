@@ -1,8 +1,10 @@
 extends _index.pug
 
 block state
-  - const title = 'Text Editor History ' + version
   - const scripts = ['../text-editor/index.min.js', 'index.min.js']
+  - const styles = ['../layout/index.min.css']
+  - const theme = '#000'
+  - const title = 'Text Editor: History ' + version
 
 block script
   script
@@ -30,60 +32,12 @@ block script
 
 block style
   style
-    | * {
-    |   box-sizing: border-box;
-    | }
-    | :root {
-    |   background: #fff;
-    |   border-top: 4px solid;
-    |   color: #000;
-    |   font: normal normal 16px/1.25 serif;
-    |   position: relative;
-    | }
-    | a {
-    |   color: #009;
-    |   text-decoration: none;
-    | }
-    | a, code {
-    |   word-wrap: break-word;
-    | }
-    | code {
-    |   font-family: monospace;
-    |   font-size: 80%;
-    | }
-    | footer, header, main, nav {
-    |   margin: 0 auto;
-    |   max-width: 700px;
-    | }
-    | hr {
-    |   border: 0;
-    |   border-top: 1px dashed;
-    |   color: inherit;
-    |   height: 0;
-    | }
-    | mark {
-    |   background: #ff0;
-    |   border: 1px solid #f00;
-    |   display: inline-block;
-    |   height: 1.25em;
-    |   min-width: 3px;
-    |   vertical-align: middle;
-    | }
-    | pre {
-    |   white-space: pre-wrap;
-    |   word-wrap: break-word;
-    | }
-    | pre code {
-    |   background: #eee;
-    |   display: block;
-    |   padding: 1em;
-    | }
-    | table {
-    |   width: 100%;
-    | }
-    | td, th {
-    |   text-align: left;
-    |   vertical-align: top;
+    | @media (min-width: 45rem) {
+    |   body > * {
+    |     margin-left: auto;
+    |     margin-right: auto;
+    |     max-width: 45rem;
+    |   }
     | }
 
 block content
@@ -93,8 +47,11 @@ block content
     hr
     p Provides custom history feature to overcome the side effect of manipulating a #[code &lt;textarea&gt;] value that cannot automatically update the default history data.
   main
-    p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false')
-    p
+    p: textarea#in(placeholder!='Type something&hellip;' spellcheck='false' style={
+      'display': 'block',
+      'width': '100%',
+    })
+    p(role='group')
       button(onclick='editor.record().wrap(\'**\', \'**\').record();'): b B
       = ' '
       button(onclick='editor.record().wrap(\'_\', \'_\').record();'): i I
@@ -102,13 +59,13 @@ block content
       button(onclick='editor.undo();') Undo
       = ' '
       button(onclick='editor.redo();') Redo
-    p
+      = ' '
       button(onclick='dump.innerHTML = \'Index: \' + editor._historyState + \'\\n---\\nHistory: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
       button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
       = ' '
       button(onclick='editor.record();') Save Selection to History
-    p
+      = ' '
       button(onclick='editor.loss();') Delete Current History
       = ' '
       button(onclick='editor.loss(editor._historyState);') Delete the Last History
@@ -130,33 +87,33 @@ block content
     h4 CommonJS
     pre: code
       | const TextEditor = require('@taufik-nurrohman/text-editor').default;
-      | const History = require('@taufik-nurrohman/text-editor.history').default;
+      | const TextEditorHistory = require('@taufik-nurrohman/text-editor.history').default;
       |
-      | TextEditor.state.with.push(History); // Load as a core extension
+      | TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
       |
       | const editor = new TextEditor(document.querySelector('textarea'), {
-      |     with: [History] // Load as an optional extension
+      |     with: [TextEditorHistory] // Load as an optional extension
       | });
     h4 ECMAScript
     pre: code
       | import TextEditor from '@taufik-nurrohman/text-editor';
-      | import History from '@taufik-nurrohman/text-editor.history';
+      | import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
       |
-      | TextEditor.state.with.push(History); // Load as a core extension
+      | TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
       |
       | const editor = new TextEditor(document.querySelector('textarea'), {
-      |     with: [History] // Load as an optional extension
+      |     with: [TextEditorHistory] // Load as an optional extension
       | });
     h2 Methods
-    h3 editor.history(index)
+    h3: code editor.history(index)
     p Get history data.
-    h3 editor.loss(index)
+    h3: code editor.loss(index)
     p Remove previous history data.
-    h3 editor.record(index)
+    h3: code editor.record(index)
     p Store current value and selection to history.
-    h3 editor.redo()
+    h3: code editor.redo()
     p Redo previous action.
-    h3 editor.undo()
+    h3: code editor.undo()
     p Undo previous action.
   footer
     hr

@@ -1,5 +1,5 @@
-Text Editor History
-===================
+Text Editor: History
+====================
 
 > History extension for [text editor](https://github.com/taufik-nurrohman/text-editor).
 

@@ -2,84 +2,31 @@
 <html dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta content="#000" name="theme-color">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 4.0.0</title>
+    <title>Text Editor: History 4.0.1</title>
+    <link href="../layout/index.min.css" rel="stylesheet">
     <style>
-      * {
-        box-sizing: border-box;
-      }
-      :root {
-        background: #fff;
-        border-top: 4px solid;
-        color: #000;
-        font: normal normal 16px/1.25 serif;
-        position: relative;
-      }
-      a {
-        color: #009;
-        text-decoration: none;
-      }
-      a,
-      code {
-        word-wrap: break-word;
-      }
-      code {
-        font-family: monospace;
-        font-size: 80%;
-      }
-      footer,
-      header,
-      main,
-      nav {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      hr {
-        border: 0;
-        border-top: 1px dashed;
-        color: inherit;
-        height: 0;
-      }
-      mark {
-        background: #ff0;
-        border: 1px solid #f00;
-        display: inline-block;
-        height: 1.25em;
-        min-width: 3px;
-        vertical-align: middle;
-      }
-      pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-      pre code {
-        background: #eee;
-        display: block;
-        padding: 1em;
-      }
-      table {
-        width: 100%;
-      }
-      td,
-      th {
-        text-align: left;
-        vertical-align: top;
+      @media (min-width: 45rem) {
+        body > * {
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 45rem;
+        }
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Text Editor History 4.0.0</h1>
+      <h1>Text Editor: History 4.0.1</h1>
       <p>History extension for <a href="../text-editor/index.html">text editor</a>.</p>
       <hr>
       <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
     </header>
     <main>
-      <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false"></textarea></p>
-      <p><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button></p>
-      <p><button onclick="dump.innerHTML = 'Index: ' + editor._historyState + '\n---\nHistory: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button></p>
-      <p><button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
+      <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
+      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = 'Index: ' + editor._historyState + '\n---\nHistory: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor._historyState);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
       <h2>Usage</h2>
       <h4>Browser</h4>
@@ -92,32 +39,32 @@
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
       <pre><code>const TextEditor = require('@taufik-nurrohman/text-editor').default;
-const History = require('@taufik-nurrohman/text-editor.history').default;
+const TextEditorHistory = require('@taufik-nurrohman/text-editor.history').default;
 
-TextEditor.state.with.push(History); // Load as a core extension
+TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
 
 const editor = new TextEditor(document.querySelector('textarea'), {
-    with: [History] // Load as an optional extension
+    with: [TextEditorHistory] // Load as an optional extension
 });</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TextEditor from '@taufik-nurrohman/text-editor';
-import History from '@taufik-nurrohman/text-editor.history';
+import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
 
-TextEditor.state.with.push(History); // Load as a core extension
+TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
 
 const editor = new TextEditor(document.querySelector('textarea'), {
-    with: [History] // Load as an optional extension
+    with: [TextEditorHistory] // Load as an optional extension
 });</code></pre>
       <h2>Methods</h2>
-      <h3>editor.history(index)</h3>
+      <h3><code>editor.history(index)</code></h3>
       <p>Get history data.</p>
-      <h3>editor.loss(index)</h3>
+      <h3><code>editor.loss(index)</code></h3>
       <p>Remove previous history data.</p>
-      <h3>editor.record(index)</h3>
+      <h3><code>editor.record(index)</code></h3>
       <p>Store current value and selection to history.</p>
-      <h3>editor.redo()</h3>
+      <h3><code>editor.redo()</code></h3>
       <p>Redo previous action.</p>
-      <h3>editor.undo()</h3>
+      <h3><code>editor.undo()</code></h3>
       <p>Undo previous action.</p>
     </main>
     <footer>
