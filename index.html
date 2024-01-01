@@ -30,7 +30,7 @@
     </header>
     <main>
       <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
-      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = 'History: ' + JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
+      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
       <h2>Usage</h2>
       <h4>Browser</h4>
@@ -81,7 +81,7 @@ editor.record(); // Record the initial value</code></pre>
     </main>
     <footer>
       <hr>
-      <p>&copy; 2023 <a href="/">Taufik Nurrohman</a></p>
+      <p>&copy; 2024 <a href="/">Taufik Nurrohman</a></p>
     </footer>
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>

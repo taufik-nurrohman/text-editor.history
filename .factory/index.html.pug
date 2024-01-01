@@ -64,7 +64,7 @@ block content
       = ' '
       button(onclick='editor.redo();') Redo
       = ' '
-      button(onclick='dump.innerHTML = \'History: \' + JSON.stringify(editor.history(), null, 2);') Inspect History
+      button(onclick='dump.innerHTML = JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
       button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
       = ' '
