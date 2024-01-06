@@ -49,7 +49,7 @@
         return x;
     };
 
-    function History(self) {
+    function History() {
         var $ = this,
             history = [],
             historyState = -1;
@@ -66,7 +66,7 @@
             if (true === of) {
                 history = [];
                 historyState = -1;
-                return [];
+                return null;
             }
             current = history.splice(isSet(of) ? of : historyState, 1);
             historyState = toEdge(historyState - 1, [-1]);
@@ -78,8 +78,8 @@
                 end = _$$$.end,
                 start = _$$$.start,
                 current = history[historyState] || [],
-                next = [self.value, start, end];
-            if (next[0] === current[0] && next[1] === current[1] && next[2] === current[2]) {
+                next = [$.get(), [start, end], Date.now()];
+            if (next[0] === current[0] && next[1][0] === current[1][0] && next[1][1] === current[1][1]) {
                 return $; // Do not save duplicate
             }
             ++historyState;
@@ -87,17 +87,13 @@
         };
         // Redo previous state
         $.redo = function () {
-            var state;
-            historyState = toEdge(historyState + 1, [0, toCount(history) - 1]);
-            state = history[historyState];
-            return $.set(state[0]).select(state[1], state[2]);
+            var state = history[historyState = toEdge(historyState + 1, [0, toCount(history) - 1])];
+            return state ? $.set(state[0]).select(state[1][0], state[1][1]) : $;
         };
         // Undo current state
         $.undo = function () {
-            var state;
-            historyState = toEdge(historyState - 1, [0, toCount(history) - 1]);
-            state = history[historyState];
-            return $.set(state[0]).select(state[1], state[2]);
+            var state = history[historyState = toEdge(historyState - 1, [0, toCount(history) - 1])];
+            return state ? $.set(state[0]).select(state[1][0], state[1][1]) : $;
         };
         return $;
     }

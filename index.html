@@ -5,31 +5,22 @@
     <meta content="#000" name="theme-color">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>History 4.0.1</title>
+    <title>Text Editor History 4.0.1</title>
     <link href="../layout/index.min.css" rel="stylesheet">
     <style>
-      @media (min-width: 45rem) {
-        :root {
-          padding-bottom: 3rem;
-          padding-top: 3rem;
-        }
-        body > * {
-          margin-left: auto;
-          margin-right: auto;
-          max-width: 45rem;
-        }
+      #dump:empty {
+        display: none;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>History 4.0.1</h1>
-      <p>History extension for <a href="../text-editor/index.html">Text Editor</a>.</p>
+      <h1><a href="../text-editor/index.html">&laquo;</a> Text Editor History 4.0.1</h1>
+      <p>History extension for <a href="../text-editor/index.html">Text Editor</a>. This extension provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
       <hr>
-      <p>Provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
     </header>
     <main>
-      <p><textarea id="in" placeholder="Type something&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
+      <p><textarea id="in" placeholder="Content goes here&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
       <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
       <h2>Usage</h2>
@@ -42,7 +33,7 @@
       with: [TextEditor.History]
   });
 
-  editor.record(); // Record the initial value
+  editor.record(); // Record the initial value, selection, and time
 
 &lt;/script&gt;</code></pre>
       <h4>CommonJS</h4>
@@ -55,7 +46,7 @@ const editor = new TextEditor(document.querySelector('textarea'), {
     with: [TextEditorHistory] // Load as an optional extension
 });
 
-editor.record(); // Record the initial value</code></pre>
+editor.record(); // Record the initial value, selection, and time</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TextEditor from '@taufik-nurrohman/text-editor';
 import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
@@ -66,18 +57,40 @@ const editor = new TextEditor(document.querySelector('textarea'), {
     with: [TextEditorHistory] // Load as an optional extension
 });
 
-editor.record(); // Record the initial value</code></pre>
+editor.record(); // Record the initial value, selection, and time</code></pre>
       <h2>Methods</h2>
-      <h3><code>editor.history(of)</code></h3>
+      <h3>Instance Methods</h3>
+      <h4><code>editor.history(of)</code></h4>
       <p>Get history data.</p>
-      <h3><code>editor.loss(of)</code></h3>
+      <pre><code>console.log(editor.history(0)); // Get the first history data
+console.log(editor.history()); // Get all history data
+console.log(editor.history(editor.history().length - 1)); // Get the last history data</code></pre>
+      <h4><code>editor.loss(of)</code></h4>
       <p>Remove previous history data.</p>
-      <h3><code>editor.record(of)</code></h3>
-      <p>Store current value and selection to history.</p>
-      <h3><code>editor.redo()</code></h3>
+      <pre><code>editor.loss(); // Remove current history data
+editor.loss(0); // Remove the first history data
+editor.loss(editor.history().length - 1); // Remove the last history data
+editor.loss(true); // Remove all history</code></pre>
+      <h4><code>editor.record(of)</code></h4>
+      <p>Store current value, selection, and time to history.</p>
+      <pre><code>editor.record(); // Store current value, selection, and time to history.
+editor.record(0); // Replace the first history data with current value, selection, and time.</code></pre>
+      <h4><code>editor.redo()</code></h4>
       <p>Redo previous action.</p>
-      <h3><code>editor.undo()</code></h3>
+      <pre><code>editor.self.addEventListener('keydown', e => {
+    if (e.ctrlKey && 'y' === e.key) {
+        e.preventDefault();
+        editor.redo();
+    }
+}, false);</code></pre>
+      <h4><code>editor.undo()</code></h4>
       <p>Undo previous action.</p>
+      <pre><code>editor.self.addEventListener('keydown', e => {
+    if (e.ctrlKey && 'z' === e.key) {
+        e.preventDefault();
+        editor.undo();
+    }
+}, false);</code></pre>
     </main>
     <footer>
       <hr>
@@ -103,7 +116,7 @@ editor.record(); // Record the initial value</code></pre>
           }
           setTimeout(() => editor.record(), 1); // Record keyboard interaction
       });
-      editor.record(); // Record the initial value
+      editor.record(); // Record the initial value, selection, and time
     </script>
   </body>
 </html>
