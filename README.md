@@ -1,5 +1,5 @@
-[Text Editor](../text-editor) &laquo; History
-=============================================
+[Text Editor](https://github.com/taufik-nurrohman/text-editor) &raquo; History
+==============================================================================
 
 History extension for [Text Editor](../text-editor). This extension provides custom history feature to overcome the side
 effect of manipulating a `<textarea>` value that cannot automatically update the default history data.
