@@ -1,8 +1,6 @@
 import {isArray, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
-
-
 export default function History() {
     let $ = this,
         history = [],
