@@ -5,23 +5,23 @@
     <meta content="#000" name="theme-color">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 4.0.2</title>
+    <title>Text Editor History 4.1.0</title>
     <link href="../layout/index.min.css" rel="stylesheet">
     <style>
-      #dump:empty {
+      #out:empty {
         display: none;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1><a href="../text-editor/index.html">&laquo;</a> Text Editor History 4.0.2</h1>
+      <h1><a href="../text-editor/index.html">&laquo;</a> Text Editor History 4.1.0</h1>
       <p>History extension for <a href="../text-editor/index.html">Text Editor</a>. This extension provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
       <hr>
     </header>
     <main>
       <p><textarea id="in" placeholder="Content goes here&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
-      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="dump.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
+      <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="$out.innerHTML = JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="$out.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
       <h2>Usage</h2>
       <h4>Browser</h4>
@@ -29,9 +29,9 @@
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script&gt;
 
-  const editor = new TextEditor(document.querySelector('textarea'), {
-      with: [TextEditor.History]
-  });
+  TextEditor.state.with.push(TextEditor.History);
+
+  const editor = new TextEditor(document.querySelector('textarea'));
 
   editor.record(); // Record the initial value, selection, and time
 
@@ -40,22 +40,18 @@
       <pre><code>const TextEditor = require('@taufik-nurrohman/text-editor').default;
 const TextEditorHistory = require('@taufik-nurrohman/text-editor.history').default;
 
-TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
+TextEditor.state.with.push(TextEditorHistory);
 
-const editor = new TextEditor(document.querySelector('textarea'), {
-    with: [TextEditorHistory] // Load as an optional extension
-});
+const editor = new TextEditor(document.querySelector('textarea'));
 
 editor.record(); // Record the initial value, selection, and time</code></pre>
       <h4>ECMAScript</h4>
       <pre><code>import TextEditor from '@taufik-nurrohman/text-editor';
 import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
 
-TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
+TextEditor.state.with.push(TextEditorHistory);
 
-const editor = new TextEditor(document.querySelector('textarea'), {
-    with: [TextEditorHistory] // Load as an optional extension
-});
+const editor = new TextEditor(document.querySelector('textarea'));
 
 editor.record(); // Record the initial value, selection, and time</code></pre>
       <h2>Methods</h2>
@@ -77,20 +73,20 @@ editor.loss(true); // Remove all history</code></pre>
 editor.record(0); // Replace the first history data with current value, selection, and time.</code></pre>
       <h4><code>editor.redo()</code></h4>
       <p>Redo previous action.</p>
-      <pre><code>editor.self.addEventListener('keydown', e => {
+      <pre><code>editor.on('key.down', e => {
     if (e.ctrlKey && 'y' === e.key) {
         e.preventDefault();
         editor.redo();
     }
-}, false);</code></pre>
+});</code></pre>
       <h4><code>editor.undo()</code></h4>
       <p>Undo previous action.</p>
-      <pre><code>editor.self.addEventListener('keydown', e => {
+      <pre><code>editor.on('key.down', e => {
     if (e.ctrlKey && 'z' === e.key) {
         e.preventDefault();
         editor.undo();
     }
-}, false);</code></pre>
+});</code></pre>
     </main>
     <footer>
       <hr>
@@ -99,11 +95,11 @@ editor.record(0); // Replace the first history data with current value, selectio
     <script src="../text-editor/index.min.js"></script>
     <script src="index.min.js"></script>
     <script>
-      const editor = new TextEditor(document.querySelector('#in'), {
-          with: [TextEditor.History]
-      });
-      let dump = document.querySelector('#out');
-      editor.self.addEventListener('keydown', e => {
+      TextEditor.state.with.push(TextEditor.History);
+      const $in = document.querySelector('#in');
+      const $out = document.querySelector('#out');
+      const editor = new TextEditor($in);
+      editor.on('key.down', e => {
           if (e.ctrlKey && 'y' === e.key) {
               editor.redo();
               e.preventDefault();

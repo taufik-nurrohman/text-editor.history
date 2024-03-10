@@ -1,34 +1,46 @@
-import {isArray, isSet} from '@taufik-nurrohman/is';
+import {isArray, isFunction, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
 export default function History() {
-    let $ = this,
-        history = [],
-        historyState = -1;
-    // Get history data
-    $.history = of => {
-        if (!isSet(of)) {
-            return history;
+    const $ = this;
+    const $$ = $.constructor.prototype;
+    $._history = [];
+    $._historyState = -1;
+    !isFunction($$.history) && ($$.history = function (of) {
+        let $ = this,
+            {_active, _history} = $;
+        if (!_active) {
+            return false;
         }
-        return isSet(history[of]) ? history[of] : null;
-    };
-    // Remove state from history
-    $.loss = of => {
-        let current;
+        if (!isSet(of)) {
+            return _history;
+        }
+        return isSet(_history[of]) ? _history[of] : null;
+    });
+    !isFunction($$.loss) && ($$.loss = function (of) {
+        let $ = this, current,
+            {_active, _history, _historyState} = $;
+        if (!_active) {
+            return false;
+        }
         if (true === of) {
-            history = [];
-            historyState = -1;
+            $._history = [];
+            $._historyState = -1;
             return null;
         }
-        current = history.splice(isSet(of) ? of : historyState, 1);
-        historyState = toEdge(historyState - 1, [-1]);
+        current = $._history.splice(isSet(of) ? of : _historyState, 1);
+        $._historyState = toEdge(_historyState - 1, [-1]);
         return current;
-    };
-    // Save current state to history
-    $.record = of => {
-            let {end, start} = $.$(),
-            current = history[historyState] || [],
-            next = [$.get(), [start, end], Date.now()];
+    });
+    !isFunction($$.record) && ($$.record = function (of) {
+        let $ = this, current, next,
+            {end, start} = $.$(),
+            {_active, _history, _historyState} = $;
+        if (!_active) {
+            return $;
+        }
+        current = _history[_historyState] || [];
+        next = [$.get(), [start, end], Date.now()];
         if (
             next[0] === current[0] &&
             next[1][0] === current[1][0] &&
@@ -36,18 +48,27 @@ export default function History() {
         ) {
             return $; // Do not save duplicate
         }
-        ++historyState;
-        return (history[isSet(of) ? of : historyState] = next), $;
-    };
-    // Redo previous state
-    $.redo = () => {
-        let state = history[historyState = toEdge(historyState + 1, [0, toCount(history) - 1])];
+        ++_historyState;
+        $._history[isSet(of) ? of : _historyState] = next;
+        $._historyState = _historyState;
+        return $;
+    });
+    !isFunction($$.redo) && ($$.redo = function () {
+        let $ = this, state,
+            {_active, _history, _historyState} = $;
+        if (!_active) {
+            return $;
+        }
+        state = _history[$._historyState = toEdge(_historyState + 1, [0, toCount(_history) - 1])];
         return state ? $.set(state[0]).select(state[1][0], state[1][1]) : $;
-    };
-    // Undo current state
-    $.undo = () => {
-        let state = history[historyState = toEdge(historyState - 1, [0, toCount(history) - 1])];
+    });
+    !isFunction($$.undo) && ($$.undo = function () {
+        let $ = this, state,
+            {_active, _history, _historyState} = $;
+        if (!_active) {
+            return $;
+        }
+        state = _history[$._historyState = toEdge(_historyState - 1, [0, toCount(_history) - 1])];
         return state ? $.set(state[0]).select(state[1][0], state[1][1]) : $;
-    };
-    return $;
+    });
 }

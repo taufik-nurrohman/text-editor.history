@@ -8,13 +8,14 @@ block state
 
 block script
   script
-    | const editor = new TextEditor(document.querySelector('#in'), {
-    |     with: [TextEditor.History]
-    | });
+    | TextEditor.state.with.push(TextEditor.History);
     |
-    | let dump = document.querySelector('#out');
+    | const $in = document.querySelector('#in');
+    | const $out = document.querySelector('#out');
     |
-    | editor.self.addEventListener('keydown', e => {
+    | const editor = new TextEditor($in);
+    |
+    | editor.on('key.down', e => {
     |     if (e.ctrlKey && 'y' === e.key) {
     |         editor.redo();
     |         e.preventDefault();
@@ -32,7 +33,7 @@ block script
 
 block style
   style
-    | #dump:empty {
+    | #out:empty {
     |   display: none;
     | }
 
@@ -57,9 +58,9 @@ block content
       = ' '
       button(onclick='editor.redo();') Redo
       = ' '
-      button(onclick='dump.innerHTML = JSON.stringify(editor.history(), null, 2);') Inspect History
+      button(onclick='$out.innerHTML = JSON.stringify(editor.history(), null, 2);') Inspect History
       = ' '
-      button(onclick='dump.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
+      button(onclick='$out.innerHTML = JSON.stringify(editor.history(1), null, 2);') Inspect the 2(nd) History
       = ' '
       button(onclick='editor.record();') Save Selection to History
       = ' '
@@ -78,9 +79,9 @@ block content
       | &lt;script src="#[a(href='index.min.js' target='_blank') ./text-editor.history/index.min.js]"&gt;&lt;/script&gt;
       | &lt;script&gt;
       |
-      |   const editor = new TextEditor(document.querySelector('textarea'), {
-      |       with: [TextEditor.History]
-      |   });
+      |   TextEditor.state.with.push(TextEditor.History);
+      |
+      |   const editor = new TextEditor(document.querySelector('textarea'));
       |
       |   editor.record(); // Record the initial value, selection, and time
       |
@@ -90,11 +91,9 @@ block content
       | const TextEditor = require('@taufik-nurrohman/text-editor').default;
       | const TextEditorHistory = require('@taufik-nurrohman/text-editor.history').default;
       |
-      | TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
+      | TextEditor.state.with.push(TextEditorHistory);
       |
-      | const editor = new TextEditor(document.querySelector('textarea'), {
-      |     with: [TextEditorHistory] // Load as an optional extension
-      | });
+      | const editor = new TextEditor(document.querySelector('textarea'));
       |
       | editor.record(); // Record the initial value, selection, and time
     h4 ECMAScript
@@ -102,11 +101,9 @@ block content
       | import TextEditor from '@taufik-nurrohman/text-editor';
       | import TextEditorHistory from '@taufik-nurrohman/text-editor.history';
       |
-      | TextEditor.state.with.push(TextEditorHistory); // Load as a core extension
+      | TextEditor.state.with.push(TextEditorHistory);
       |
-      | const editor = new TextEditor(document.querySelector('textarea'), {
-      |     with: [TextEditorHistory] // Load as an optional extension
-      | });
+      | const editor = new TextEditor(document.querySelector('textarea'));
       |
       | editor.record(); // Record the initial value, selection, and time
     h2 Methods
@@ -132,21 +129,21 @@ block content
     h4: code editor.redo()
     p Redo previous action.
     pre: code
-      | editor.self.addEventListener('keydown', e => {
+      | editor.on('key.down', e => {
       |     if (e.ctrlKey && 'y' === e.key) {
       |         e.preventDefault();
       |         editor.redo();
       |     }
-      | }, false);
+      | });
     h4: code editor.undo()
     p Undo previous action.
     pre: code
-      | editor.self.addEventListener('keydown', e => {
+      | editor.on('key.down', e => {
       |     if (e.ctrlKey && 'z' === e.key) {
       |         e.preventDefault();
       |         editor.undo();
       |     }
-      | }, false);
+      | });
   footer
     hr
     p
