@@ -136,7 +136,7 @@
         });
         return $;
     }
-    Object.defineProperty(History.prototype.constructor, 'name', {
+    Object.defineProperty(History, 'name', {
         value: 'TextEditor.History'
     });
     return History;
