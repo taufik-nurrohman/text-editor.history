@@ -15,7 +15,7 @@
   </head>
   <body>
     <header>
-      <h1><a href="../text-editor/index.html">&laquo;</a> Text Editor History 4.1.0</h1>
+      <h1><a href="../text-editor/index.html#extensions">&laquo;</a> Text Editor History 4.1.0</h1>
       <p>History extension for <a href="../text-editor/index.html">Text Editor</a>. This extension provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
       <hr>
     </header>
@@ -23,7 +23,7 @@
       <p><textarea id="in" placeholder="Content goes here&hellip;" spellcheck="false" style="display:block;width:100%;"></textarea></p>
       <p role="group"><button onclick="editor.record().wrap('**', '**').record();"><b>B</b></button> <button onclick="editor.record().wrap('_', '_').record();"><i>I</i></button> <button onclick="editor.undo();">Undo</button> <button onclick="editor.redo();">Redo</button> <button onclick="$out.innerHTML = JSON.stringify(editor.history(), null, 2);">Inspect History</button> <button onclick="$out.innerHTML = JSON.stringify(editor.history(1), null, 2);">Inspect the 2(nd) History</button> <button onclick="editor.record();">Save Selection to History</button> <button onclick="editor.loss();">Delete Current History</button> <button onclick="editor.loss(editor.history().length - 1);">Delete the Last History</button> <button onclick="editor.loss(0);">Delete the First History</button> <button onclick="editor.loss(true);">Delete All History</button></p>
       <pre id="out"></pre>
-      <h2>Usage</h2>
+      <h2 id="usage"><a href="#usage">#</a> Usage</h2>
       <h4>Browser</h4>
       <pre><code>&lt;script src="<a href="../text-editor/index.min.js" target="_blank">./text-editor/index.min.js</a>"&gt;&lt;/script&gt;
 &lt;script src="<a href="index.min.js" target="_blank">./text-editor.history/index.min.js</a>"&gt;&lt;/script&gt;
@@ -54,7 +54,7 @@ TextEditor.state.with.push(TextEditorHistory);
 const editor = new TextEditor(document.querySelector('textarea'));
 
 editor.record(); // Record the initial value, selection, and time</code></pre>
-      <h2>Methods</h2>
+      <h2 id="methods"><a href="#methods">#</a> Methods</h2>
       <h3>Instance Methods</h3>
       <h4><code>editor.history(of)</code></h4>
       <p>Get history data.</p>
@@ -73,18 +73,18 @@ editor.loss(true); // Remove all history</code></pre>
 editor.record(0); // Replace the first history data with current value, selection, and time.</code></pre>
       <h4><code>editor.redo()</code></h4>
       <p>Redo previous action.</p>
-      <pre><code>editor.on('key.down', e => {
+      <pre><code>editor.on('key.down', function (e) {
     if (e.ctrlKey && 'y' === e.key) {
         e.preventDefault();
-        editor.redo();
+        this.redo();
     }
 });</code></pre>
       <h4><code>editor.undo()</code></h4>
       <p>Undo previous action.</p>
-      <pre><code>editor.on('key.down', e => {
+      <pre><code>editor.on('key.down', function (e) {
     if (e.ctrlKey && 'z' === e.key) {
         e.preventDefault();
-        editor.undo();
+        this.undo();
     }
 });</code></pre>
     </main>

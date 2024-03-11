@@ -40,7 +40,7 @@ block style
 block content
   header
     h1
-      a(href='../text-editor/index.html') &laquo;
+      a(href='../text-editor/index.html#extensions') &laquo;
       = ' ' + title
     p History extension for #[a(href='../text-editor/index.html') Text Editor]. This extension provides custom history feature to overcome the side effect of manipulating a #[code &lt;textarea&gt;] value that cannot automatically update the default history data.
     hr
@@ -72,7 +72,9 @@ block content
       = ' '
       button(onclick='editor.loss(true);') Delete All History
     pre#out
-    h2 Usage
+    h2#usage
+      a(href='#usage') #
+      = ' Usage'
     h4 Browser
     pre: code
       | &lt;script src="#[a(href='../text-editor/index.min.js' target='_blank') ./text-editor/index.min.js]"&gt;&lt;/script&gt;
@@ -106,7 +108,9 @@ block content
       | const editor = new TextEditor(document.querySelector('textarea'));
       |
       | editor.record(); // Record the initial value, selection, and time
-    h2 Methods
+    h2#methods
+      a(href='#methods') #
+      = ' Methods'
     h3 Instance Methods
     h4: code editor.history(of)
     p Get history data.
@@ -129,19 +133,19 @@ block content
     h4: code editor.redo()
     p Redo previous action.
     pre: code
-      | editor.on('key.down', e => {
+      | editor.on('key.down', function (e) {
       |     if (e.ctrlKey && 'y' === e.key) {
       |         e.preventDefault();
-      |         editor.redo();
+      |         this.redo();
       |     }
       | });
     h4: code editor.undo()
     p Undo previous action.
     pre: code
-      | editor.on('key.down', e => {
+      | editor.on('key.down', function (e) {
       |     if (e.ctrlKey && 'z' === e.key) {
       |         e.preventDefault();
-      |         editor.undo();
+      |         this.undo();
       |     }
       | });
   footer

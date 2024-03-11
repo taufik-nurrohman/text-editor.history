@@ -71,4 +71,9 @@ export default function History() {
         state = _history[$._historyState = toEdge(_historyState - 1, [0, toCount(_history) - 1])];
         return state ? $.set(state[0]).select(state[1][0], state[1][1]) : $;
     });
+    return $;
 }
+
+Object.defineProperty(History.prototype.constructor, 'name', {
+    value: 'TextEditor.History'
+});
