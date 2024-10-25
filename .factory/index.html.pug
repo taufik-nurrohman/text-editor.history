@@ -33,17 +33,22 @@ block script
 
 block style
   style
+    | body {
+    |   margin-left: auto;
+    |   margin-right: auto;
+    |   max-width: 60rem;
+    | }
     | #out:empty {
     |   display: none;
     | }
 
 block content
   header
-    h1
-      a(href='../text-editor/index.html#extensions') &laquo;
-      = ' ' + title
-    p History extension for #[a(href='../text-editor/index.html') Text Editor]. This extension provides custom history feature to overcome the side effect of manipulating a #[code &lt;textarea&gt;] value that cannot automatically update the default history data.
-    hr
+    hgroup
+      h1
+        a(href='../text-editor/index.html#extensions') &laquo;
+        = ' ' + title
+      p This extension provides custom history feature to overcome the side effect of manipulating a #[code &lt;textarea&gt;] value that cannot automatically update the default history data.
   main
     p: textarea#in(placeholder!='Content goes here&hellip;' spellcheck='false' style={
       'display': 'block',
