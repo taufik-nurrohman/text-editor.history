@@ -5,7 +5,7 @@
     <meta content="#000" name="theme-color">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 4.1.1</title>
+    <title>Text Editor History 4.1.2</title>
     <link href="../layout/index.min.css" rel="stylesheet">
     <style>
       #out:empty {
@@ -15,7 +15,7 @@
   </head>
   <body>
     <header>
-      <h1><a href="../text-editor/index.html#extensions">&laquo;</a> Text Editor History 4.1.1</h1>
+      <h1><a href="../text-editor/index.html#extensions">&laquo;</a> Text Editor History 4.1.2</h1>
       <p>History extension for <a href="../text-editor/index.html">Text Editor</a>. This extension provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
       <hr>
     </header>
@@ -99,14 +99,14 @@ editor.record(0); // Replace the first history data with current value, selectio
       const $in = document.querySelector('#in');
       const $out = document.querySelector('#out');
       const editor = new TextEditor($in);
-      editor.on('key.down', e => {
+      editor.on('key.down', function (e) {
           if (e.ctrlKey && 'y' === e.key) {
-              editor.redo();
+              this.redo();
               e.preventDefault();
               return;
           }
           if (e.ctrlKey && 'z' === e.key) {
-              editor.undo();
+              this.undo();
               e.preventDefault();
               return;
           }

@@ -1,4 +1,4 @@
-import {isArray, isFunction, isSet} from '@taufik-nurrohman/is';
+import {isFunction, isSet} from '@taufik-nurrohman/is';
 import {toCount, toEdge} from '@taufik-nurrohman/to';
 
 export default function History() {
