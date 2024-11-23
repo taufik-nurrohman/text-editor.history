@@ -5,7 +5,7 @@
     <meta content="#000" name="theme-color">
     <meta content="width=device-width" name="viewport">
     <meta content="Provides custom history feature to overcome the side effect of manipulating a `&lt;textarea&gt;` value that cannot automatically update the default history data." name="description">
-    <title>Text Editor History 4.1.4</title>
+    <title>Text Editor History 4.1.5</title>
     <link href="../layout/index.min.css" rel="stylesheet">
     <style>
       body {
@@ -24,7 +24,7 @@
   <body>
     <header>
       <hgroup>
-        <h1><a href="../text-editor/index.html#extensions">&laquo;</a> Text Editor History 4.1.4</h1>
+        <h1><a href="../text-editor/index.html#extensions">&laquo;</a> Text Editor History 4.1.5</h1>
         <p>This extension provides custom history feature to overcome the side effect of manipulating a <code>&lt;textarea&gt;</code> value that cannot automatically update the default history data.</p>
       </hgroup>
     </header>
@@ -66,22 +66,22 @@ editor.record(); // Record the initial value, selection, and time</code></pre>
       <h2 id="methods"><a href="#methods">#</a> Methods</h2>
       <h3>Instance Methods</h3>
       <h4><code>editor.history(of)</code></h4>
-      <p>Get history data.</p>
+      <p>Gets history data.</p>
       <pre><code>console.log(editor.history(0)); // Get the first history data
 console.log(editor.history()); // Get all history data
 console.log(editor.history(editor.history().length - 1)); // Get the last history data</code></pre>
       <h4><code>editor.loss(of)</code></h4>
-      <p>Remove previous history data.</p>
+      <p>Removes previous history data.</p>
       <pre><code>editor.loss(); // Remove current history data
 editor.loss(0); // Remove the first history data
 editor.loss(editor.history().length - 1); // Remove the last history data
 editor.loss(true); // Remove all history</code></pre>
       <h4><code>editor.record(of)</code></h4>
-      <p>Store current value, selection, and time to history.</p>
+      <p>Stores current value, selection, and time to history.</p>
       <pre><code>editor.record(); // Store current value, selection, and time to history.
 editor.record(0); // Replace the first history data with current value, selection, and time.</code></pre>
       <h4><code>editor.redo()</code></h4>
-      <p>Redo previous action.</p>
+      <p>Redoes previous action.</p>
       <pre><code>editor.on('key.down', function (e) {
     if (e.ctrlKey && 'y' === e.key) {
         e.preventDefault();
@@ -89,7 +89,7 @@ editor.record(0); // Replace the first history data with current value, selectio
     }
 });</code></pre>
       <h4><code>editor.undo()</code></h4>
-      <p>Undo previous action.</p>
+      <p>Undoes previous action.</p>
       <pre><code>editor.on('key.down', function (e) {
     if (e.ctrlKey && 'z' === e.key) {
         e.preventDefault();

@@ -54,7 +54,7 @@
 
     function History() {
         var $ = this;
-        var $$ = $.constructor.prototype;
+        var $$ = $.constructor._;
         $._history = [];
         $._historyState = -1;
         !isFunction($$.history) && ($$.history = function (of) {

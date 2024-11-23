@@ -3,7 +3,7 @@ import {toCount, toEdge} from '@taufik-nurrohman/to';
 
 export default function History() {
     const $ = this;
-    const $$ = $.constructor.prototype;
+    const $$ = $.constructor._;
     $._history = [];
     $._historyState = -1;
     !isFunction($$.history) && ($$.history = function (of) {
